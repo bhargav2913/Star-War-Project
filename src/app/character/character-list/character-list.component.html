@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="header">
+      <h1>STAR WARS</h1>
+      <div class="project-name">THE SWAPI PROJECT</div>
+    </div>
+    
+    <div class="content">
+      <div class="filter-section">
+        <label for="film">Movie Name:</label>
+        <select id="film" [(ngModel)]="selectedFilm" (change)="filterCharacters()">
+          <option value="">All</option>
+          <option *ngFor="let film of films" [value]="film.url">{{ film.title }}</option>
+        </select>
+      
+        <label for="species">Species:</label>
+        <select id="species" [(ngModel)]="selectedSpecies" (change)="filterCharacters()">
+          <option value="">All</option>
+          <option *ngFor="let species of species" [value]="species.url">{{ species.name }}</option>
+        </select>
+  
+        <label for="vehicle">Vehicle:</label>
+        <select id="vehicle" [(ngModel)]="selectedVehicle" (change)="filterCharacters()">
+          <option value="">All</option>
+          <option *ngFor="let vehicle of vehicles" [value]="vehicle.url">{{ vehicle.name }}</option>
+        </select>
+  
+        <label for="starship">Star Ships:</label>
+        <select id="starship" [(ngModel)]="selectedStarship" (change)="filterCharacters()">
+          <option value="">All</option>
+          <option *ngFor="let starship of starships" [value]="starship.url">{{ starship.name }}</option>
+        </select>
+      
+        <label for="birthYear">Birth Year:</label>
+        <div class="birth-year-options">
+          <label><input type="radio" name="birthYear" [(ngModel)]="selectedBirthYear" value=""> All</label>
+          <label><input type="radio" name="birthYear" [(ngModel)]="selectedBirthYear" value="BBY20"> BBY20</label>
+        </div>
+        <button (click)="filterCharacters()">Search</button>
+      </div>
+  
+      <div class="search-results">
+        <h2>SEARCH RESULTS</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Sl No.</th>
+              <th>Character Name</th>
+              <th>Species</th>
+              <th>Birth Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let character of filteredCharacters; let i = index" (click)="selectCharacter(character)">
+              <td>{{ i + 1 }}</td>
+              <td>{{ character.name }}</td>
+              <td>{{ getSpeciesName(character.species) }}</td>
+              <td>{{ character.birth_year }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
